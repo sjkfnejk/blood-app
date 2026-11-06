@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f3f7f5" />
+    <title>血壓日誌</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#" aria-label="血壓日誌首頁">
+          <span class="brand-mark" aria-hidden="true">+</span>
+          <span>日常健康<span class="brand-divider">/</span>血壓日誌</span>
+        </a>
+        <span class="today-label" id="today-label"></span>
+      </header>
+
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">PERSONAL HEALTH LOG</p>
+          <h1 id="page-title">留意日常，<span>記錄每一刻。</span></h1>
+          <p class="intro-copy">用一點時間留下紀錄，慢慢看見自己的日常變化。</p>
+        </div>
+        <div class="pulse-art" aria-hidden="true">
+          <span class="pulse-dot"></span>
+          <svg viewBox="0 0 220 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M2 37H56L70 37L82 14L101 58L119 27L132 37H218" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="pulse-caption">ONE DAY AT A TIME</span>
+        </div>
+      </section>
+
+      <section class="overview" aria-label="紀錄摘要">
+        <div class="overview-item">
+          <span class="overview-label">累積紀錄</span>
+          <strong id="reading-count">0</strong>
+          <span class="overview-unit">筆</span>
+        </div>
+        <div class="overview-item latest-item">
+          <span class="overview-label">最近一次紀錄</span>
+          <strong id="latest-reading">尚無紀錄</strong>
+          <span class="overview-unit" id="latest-time">新增第一筆資料吧</span>
+        </div>
+        <div class="overview-note">
+          <span class="note-mark" aria-hidden="true">i</span>
+          <span>紀錄會保存在這部裝置的瀏覽器中。</span>
+        </div>
+      </section>
+
+      <div class="content-grid">
+        <section class="entry-panel" aria-labelledby="form-title">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">NEW ENTRY</p>
+              <h2 id="form-title">新增一筆紀錄</h2>
+            </div>
+            <span class="heading-index">01</span>
+          </div>
+
+          <form id="reading-form">
+            <fieldset class="measurement-group">
+              <legend>血壓與脈搏</legend>
+              <div class="measurements">
+                <label class="field measure-field">
+                  <span>收縮壓 <small>SYS</small></span>
+                  <span class="input-wrap"><input name="systolic" type="number" inputmode="numeric" min="1" max="300" placeholder="120" required /><span class="unit">mmHg</span></span>
+                </label>
+                <label class="field measure-field">
+                  <span>舒張壓 <small>DIA</small></span>
+                  <span class="input-wrap"><input name="diastolic" type="number" inputmode="numeric" min="1" max="200" placeholder="80" required /><span class="unit">mmHg</span></span>
+                </label>
+                <label class="field measure-field pulse-field">
+                  <span>脈搏</span>
+                  <span class="input-wrap"><input name="pulse" type="number" inputmode="numeric" min="1" max="300" placeholder="72" required /><span class="unit">次 / 分</span></span>
+                </label>
+              </div>
+            </fieldset>
+
+            <label class="field select-field" for="medication">
+              <span>藥物治療</span>
+              <select id="medication" name="medication" required>
+                <option value="無">無</option>
+                <option value="已服藥">已服藥</option>
+                <option value="未服藥">未服藥</option>
+              </select>
+            </label>
+
+            <label class="field notes-field" for="notes">
+              <span>備註 <small>選填</small></span>
+              <textarea id="notes" name="notes" rows="3" maxlength="500" placeholder="例如：起床後、運動後……"></textarea>
+            </label>
+
+            <button class="submit-button" type="submit">
+              <span>儲存紀錄</span>
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </button>
+            <p class="form-message" id="form-message" role="status" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <section class="history-panel" aria-labelledby="history-title">
+          <div class="section-heading history-heading">
+            <div>
+              <p class="eyebrow">YOUR HISTORY</p>
+              <h2 id="history-title">血壓紀錄</h2>
+            </div>
+            <span class="heading-index">02</span>
+          </div>
+          <div class="list-labels" aria-hidden="true">
+            <span>測量數值</span>
+            <span>紀錄時間</span>
+          </div>
+          <ol class="reading-list" id="reading-list" aria-live="polite"></ol>
+          <div class="empty-state" id="empty-state">
+            <span class="empty-icon" aria-hidden="true">↘</span>
+            <p>還沒有血壓紀錄</p>
+            <span>新增一筆資料，將會顯示在這裡。</span>
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer">
+        <span>血壓日誌 <span class="footer-dot">·</span> 個人紀錄</span>
+        <span>如有健康疑慮，請諮詢醫療專業人員。</span>
+      </footer>
+    </main>
+  </body>
+</html>
